@@ -1,6 +1,10 @@
 <?php
 require_once('autoload.php');
-require_once('routes.php');
+
+/**
+ * Loading all the helper functions defined in the files under the Helpers directory.
+ * This will make the functions accessable throughout the application.
+ */
 function loadHelpers()
 {
     $helperDir = __DIR__."/Helpers";
@@ -15,3 +19,9 @@ function loadHelpers()
 }
 
 loadHelpers();
+
+// echo $_SERVER['REQUEST_METHOD'];
+// exit;
+require_once('routes.php');
+
+App\Route::mapRoute();
