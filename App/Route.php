@@ -15,13 +15,13 @@ class Route
      */
     public static function mapRoute()
     {
-        $uri = strtolower($_SERVER['REQUEST_URI']);
-        $method = strtoupper($_SERVER['REQUEST_METHOD']);                                 
+        $uri = strtolower($_SERVER['REQUEST_URI']?? '');
+        $method = strtoupper($_SERVER['REQUEST_METHOD']?? '');                                 
         $segments = explode("/", $uri);
         $routes = self::$routes;
         foreach($routes as $route){
             if($route->method == $method && $route->url == $uri){             
-                $routeControllerAction = explode("@", $route->controllerAction);              ;
+                $routeControllerAction = explode("@", $route->controllerAction); 
                 $controller = $routeControllerAction[0];
                 $action = $routeControllerAction[1];
                 $controllerObj = new $controller();
