@@ -1,12 +1,13 @@
 <?php
 /**
- * The file powers the CLI of the application.
- * Start by mapping a command to the class method under the commands section ot settings.json file.
- * When you run the command like this: php console.php mycommand, the method defined is executed.
+ * This file powers the CLI of the framework.
+ * Start by mapping a command to a class method under the commands section ot settings.json file.
+ * When you run the command like this: php console.php mycommand, the method defined will be executed.
  */
 require_once('bootstrap.php');
 
 if($argc <= 1){
+    echo 'No argument passed\n';
     return false;
 }
 

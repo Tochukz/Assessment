@@ -3,7 +3,7 @@ require_once('autoload.php');
 
 /**
  * Loading all the helper functions defined in the files under the Helpers directory.
- * This will make the functions accessable throughout the application.
+ * This will make the functions accessible throughout the application.
  */
 function loadHelpers()
 {
@@ -20,8 +20,6 @@ function loadHelpers()
 
 loadHelpers();
 
-// echo $_SERVER['REQUEST_METHOD'];
-// exit;
 require_once('routes.php');
 
 App\Route::mapRoute();
