@@ -88,3 +88,13 @@ function getCommands()
 {
     return getSettings()['commands'];
 }
+
+/**
+ * Returns the application's home directory
+ * 
+ * @return tring
+ */
+function appDir()
+{
+    return __DIR__."/../";
+}

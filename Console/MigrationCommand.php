@@ -1,6 +1,8 @@
 <?php
 namespace Console;
 
+use Database\Migrations\TruncateOrDrop;
+
 class MigrationCommand
 {
 
@@ -57,5 +59,41 @@ class MigrationCommand
             }
 
         }
+    }
+    
+    /**
+     * Command to drop a specified table
+     * 
+     * @param string $tableName
+     * @return void
+     */
+    public function dropTable($tableName)
+    {
+        if(!$tableName){
+            echo "Please specify the table name to be dropped\n";
+            exit;
+        }
+        $drop = new TruncateOrDrop();
+        $drop->dropTable($tableName);
+        echo "$tableName has been dropped.\n";
+    }
+
+
+    /**
+     * Command to truncates a secified table
+     * 
+     * @param string $tableName
+     * @return void
+     */
+    public function truncateTable($tableName)
+    {
+        if(!$tableName){
+            echo "Please specify the table name to be truncated\n";
+            exit;
+        }
+        $truncate = new TruncateOrDrop();
+        $truncate->truncateTable($tableName);
+        echo "$tableName has been truncated\n";
+
     }
 }

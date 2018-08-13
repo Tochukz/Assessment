@@ -29,20 +29,20 @@ abstract class Seeder
     }
 
     /**
-     * Seeds a given table with a data record record.
+     * Seeds a given table with a data record.
      * 
      * @param string $tableName
-     * @param string $inputArray
+     * @param array $inputArray
      * @return void
      */
-    public function seedTable($tableName, $inputArray)
+    public function seedTable(string $tableName, array $inputArray)
     {      
-        $query = "SELECT * FROM information_schema.columns WHERE table_schema = DATABASE() AND table_name =  'users'";
+        $query = "SELECT * FROM information_schema.columns WHERE table_schema = DATABASE() AND table_name =  '$tableName'";
         $statement = $this->connection->prepare($query);
         $statement->execute();
         $keyStr = "";
         $placeHolderStr = "";
-         // $tableColumnInfo = $statement->fetchAll(PDO::FETCH_ASSOC); 
+        //$tableColumnInfo = $statement->fetchAll(PDO::FETCH_ASSOC);        
         while($column = $statement->fetch(PDO::FETCH_ASSOC)){
             if($column['COLUMN_KEY'] == 'PRI' || $column ['EXTRA'] == 'auto_increment'){
                 continue;
@@ -51,10 +51,11 @@ abstract class Seeder
             $placeHolderStr .= ":".$column['COLUMN_NAME'].",";             
         }
         $keys = chop($keyStr, ','); 
-        $placeHolders = chop($placeHolderStr, ',');    
-       
-        $query = "INSERT INTO $tableName($keys)  VALUES($placeHolders)";
-        $statement = $this->connection->prepare($query);            
+        $placeHolders = chop($placeHolderStr, ',');            
+
+        $query = "INSERT INTO $tableName($keys) VALUES($placeHolders)";
+        $statement = $this->connection->prepare($query); 
+        //var_dump($keys, $placeHolders, $inputArray); exit;           
         $statement->execute($inputArray);       
     }
 

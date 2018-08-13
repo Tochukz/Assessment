@@ -20,7 +20,8 @@ if(array_key_exists($argv[1], $commands)){
     $class = "Console\\".$classAndMethod[0];
     $method = $classAndMethod[1];
     $obj = new $class();
-    return $obj->$method();
+    $methodArg = $argv[2]?? null;
+    return $obj->$method($methodArg);
 }else{
     echo "The command ".$argv[1]." is not defined\n";
 }

@@ -1,4 +1,4 @@
 <?php
 use App\Route;
 
-Route::get("/assessment/index", "Assessment@index");
+Route::get("/assessment/index", "AssessmentController@index");

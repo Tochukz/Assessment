@@ -67,7 +67,8 @@ abstract class Migration
         }
         exit;
     }
-    
+        
+
     /**
      * Free the connection resource.
      */
