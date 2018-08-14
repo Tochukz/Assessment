@@ -14,4 +14,11 @@ class AssessmentController
         // echo '</pre>';
         return View('index', ['data'=>$data]);
     }
+
+    public function process()
+    {
+        echo '<pre>';
+        var_dump($_POST);
+        echo '</pre>';
+    }
 }
