@@ -15,25 +15,79 @@ class Route
      */
     public static function mapRoute()
     {
+           
         $uri = strtolower($_SERVER['REQUEST_URI']?? '');
-        $method = strtoupper($_SERVER['REQUEST_METHOD']?? '');                                 
-        $segments = explode("/", $uri);
-        $routes = self::$routes;
-        foreach($routes as $route){
-            if($route->method == $method && $route->url == $uri){             
-                $routeControllerAction = explode("@", $route->controllerAction); 
-                $controller = $routeControllerAction[0];
-                $action = $routeControllerAction[1];
-                $controllerObj = new $controller();
-                $controllerObj->$action();
-            }
-        }
+        $method = strtoupper($_SERVER['REQUEST_METHOD']?? ''); 
         if($uri == '/' && $method == 'GET'){
             echo "Go to home page";            
         }   
+
+        $url = trim($uri, "/");          
+        $urlSegments= explode("/", $url); 
+        $routes = self::$routes; 
+        $found = false;
+        foreach($routes as $route){            
+            if($route->url == $url && $route->method == $method){                            
+                self::callAction($route);
+            }elseif($route->method == $method && count($urlSegments) == count(explode("/", $route->url))){               
+                $routeSegments = explode("/", $route->url);
+                $args = self::matchRoute($routeSegments, $urlSegments);                
+                if($args){
+                    self::callAction($route, $args);
+                }                                    
+            }elseif($route->url == $url && $route->method != $method){                                
+                 $found = 'partial';                                
+            }           
+        }
+                
+        if($found === 'partial'){
+            exit("Method not allowed<br />");
+        }elseif($found === false){
+            return view('Errors.404');
+        }
     
     }
 
+    /**
+     * Calls the action method of the controller class.
+     * 
+     * @param stdClass $route
+     * @param array $args
+     * @param return void
+     */
+    public static function callAction(\stdClass $route, array $args = [])
+    { 
+        $routeControllerAction = explode("@", $route->controllerAction); 
+        $controller = $routeControllerAction[0];
+        $action = $routeControllerAction[1];
+        $controllerObj = new $controller();
+        $controllerObj->$action(...$args);     
+        exit;             
+    }
+
+    /**
+     * Matches a route having one or more parameters with a given url.
+     * 
+     * @param array $routeSegments
+     * @param array $urlSegments
+     * @return array|boolean
+     */
+    public static function matchRoute(array $routeSegments, array $urlSegments){         
+        $args = [];
+        for($i = 0; $i<count($routeSegments); $i++){           
+            if(preg_match("/^\{{1}[a-zA-Z0-9_\-\s]+\}{1}$/", $routeSegments[$i])){
+                $arg = str_replace(['\{', '\}'], "", $routeSegments[$i]);
+                //$$arg = $urlSegments[$i];
+                // $args[$arg] = $urlSegments[$i];
+                $args[] = $urlSegments[$i];
+                continue;
+            }
+            if($routeSegments[$i] != $urlSegments[$i]){
+                return false;               
+            }
+        }
+        return $args;
+    }
 
     /**
      * Adds a route for a GET method to the array of routes.
@@ -71,7 +125,7 @@ class Route
     {      
        $newRoute = new \stdClass();
        $newRoute->method = $method;
-       $newRoute->url = strtolower($url); 
+       $newRoute->url = strtolower(trim($url, "/")); 
        $newRoute->controllerAction = "Controllers\\$controllerAction";
        array_push(self::$routes, $newRoute);
     }

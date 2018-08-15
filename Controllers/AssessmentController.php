@@ -2,16 +2,14 @@
 namespace Controllers;
 
 use Models\ShopAssessment;
+use Models\ShopRetailers;
 
 class AssessmentController
 {
     public function index()    
     {        
         $assessment = new ShopAssessment();
-        $data = $assessment->get();
-        // echo '<pre>';
-        // var_dump($data);
-        // echo '</pre>';
+        $data = $assessment->get();      
         return View('index', ['data'=>$data]);
     }
 
@@ -20,5 +18,18 @@ class AssessmentController
         echo '<pre>';
         var_dump($_POST);
         echo '</pre>';
+    }
+
+    public function person($per){
+        echo $per;
+    }
+
+    public function personId($person ,$id){
+        echo $person, ' ', $id;
+    }
+
+    public function why()
+    {
+        echo 'Overiddes some';
     }
 }

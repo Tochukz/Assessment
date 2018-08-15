@@ -22,11 +22,7 @@
         cursor:pointer;
     }
     </style>
-
 </head>
-
-
-
 <body>
 <nav class="navbar navbar-default navbar-static-top" id="nav">
     <div class="container">

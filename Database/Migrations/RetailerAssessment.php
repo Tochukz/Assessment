@@ -23,18 +23,20 @@ class RetailerAssessment extends Migration
     }
 
     /**
-     * Creation of the assessment_questions table.
+     * Creation of the shop_retailers table.
      * 
      * @return boolean
      */
-    // public function createAssessmentQuestionsTable()
-    // {
-    //     $query = "CREATE TABLE IF NOT EXISTS assessment_questions(
-    //        id INT(2) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    //        question VARCHAR(150) NOT NULL,
-    //        options VARCHAR(255) NOT NULL
-    //     )";
-    //     $this->execQuery($query);
-    //     return true;
-    // }
+    public function createShopRetailersTable()
+    {
+        $query = "CREATE TABLE IF NOT EXISTS shop_retailers(
+           id INT(2) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+           site_name VARCHAR(40) NOT NULL,
+           result TEXT,
+           score INT(3),
+           created_date DATETIME
+        )";
+        $this->execQuery($query);
+        return true;
+    }
 }

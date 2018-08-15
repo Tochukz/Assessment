@@ -9,6 +9,7 @@
  * @return void
  */
 function view($templateChain, $array = null){
+    App::view();
     if($array != null){
         foreach($array as $key=>$value){          
             $$key = $value;
@@ -17,6 +18,7 @@ function view($templateChain, $array = null){
     $template = str_replace('.', '/', $templateChain);
     require_once(__DIR__.'/../Views/'.$template.'.php');
 }
+
 
 /**
  * Build an array of all the files in a given directory.
@@ -97,4 +99,46 @@ function getCommands()
 function appDir()
 {
     return __DIR__."/../";
+}
+
+/**
+ * Provides help for a given cli command.
+ */
+function getHelp($command)
+{
+    $message = "";
+    switch($command){
+        case 'migrate':
+            $message .= "Syntax:\n \t php console.php migrate\n";
+            $message .= "Details:\n";
+            $message .= "\t Runs all the migration classes defined in Database/Migrations directory\n";
+            $message .= "\t A migration class must extend the  \Database\Migrations\Migration abstract class\n";
+            $message .= "\t The table creation method in a migration class must follow the naming convention create[tableName]Table\n";            
+            break;
+        case 'seed':
+           $message .= "Syntax:\n \t php console.php seed SeederClassName\n";
+           $message .= "Details:\n";
+           $message .= "\t Runs the seeder class specified by the name [SeederClassName]\n";
+           $message .= "\t A Seeder class must extend Database\Seeders\Seeder abstract class\n";
+           $message .= "\t A seeder class must defined a method following the namiing convention seed[tableName]Table\n";  
+           break;         
+        case 'seed-all':
+           $message .= "Syntax:\n \t php console.php seed-all\n";
+           $message .= "Details:\n";
+           $message .= "\t Runs all the Seeder classes defined in the Database/Migration/Seeders directory\n";
+           break;
+        case 'drop-table':
+            $message .= "Syntax:\n \t php console.php drop-table tableName\n"; 
+            $message .= "Details:\n";   
+            $message .= "\t Drops the specified table\n"; 
+            break;
+        case 'truncate-table':
+            $message .= "Syntax:\n \t php console.php drop-table tableName\n"; 
+            $message .= "Details:\n";   
+            $message .= "\t Drops the specified table\n"; 
+            break;
+        default:
+            $message .= "No help found\n"; 
+    }
+    return $message;
 }
