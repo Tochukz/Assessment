@@ -1,5 +1,6 @@
 <?php
-namespace App\View;
+namespace App;
+
 class View
 {
     static $instance = null;

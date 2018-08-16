@@ -34,7 +34,7 @@
 <nav class="navbar navbar-default navbar-static-top" id="nav">
     <div class="container">
         <div class="navbar-header">
-            <a href="index.php" class="navbar-brand">--</a>
+            <a href="#" class="navbar-brand" style="color:#22c75a">Retailer Competency Assessment</a>
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-menu" aria-expanded="false">
                 <span class="sr-only"> Toggle Navigation </span>
                 <span class="icon-bar"> </span>
@@ -44,7 +44,7 @@
         </div>
         <div class="collapse navbar-collapse navbar-right" id="nav-menu">
             <ul class="nav navbar-nav">
-                <li><a href="index.php">Retailer Competency Assessment</a></li>
+                <li><a href="#">Create New</a></li>
                 
             </ul>
         </div>

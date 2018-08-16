@@ -1,23 +1,4 @@
-<?php require_once('partial/navigation.php'); ?>
-<nav class="navbar navbar-default navbar-static-top" id="nav">
-    <div class="container">
-        <div class="navbar-header">
-            <a href="index.php" class="navbar-brand">--</a>
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-menu" aria-expanded="false">
-                <span class="sr-only"> Toggle Navigation </span>
-                <span class="icon-bar"> </span>
-                <span class="icon-bar"> </span>
-                <span class="icon-bar"> </span>
-            </button>
-        </div>
-        <div class="collapse navbar-collapse navbar-right" id="nav-menu">
-            <ul class="nav navbar-nav">
-                <li><a href="index.php">Retailer Competency Assessment</a></li>
-                
-            </ul>
-        </div>
-    </div>
-</nav>
+<?php require_once('Partials/navigation.php'); ?>
 <section>
 <div class="container">    
     <div class="row">
@@ -49,7 +30,7 @@
                     $recordStr = "";
                     $x = 1;
                     foreach ($data as $record) {
-                        $recordStr .= '<tr style="background:#DAA520;color:#fff;font-weight:bold" data-assess="score-group'.$x.'" >
+                        $recordStr .= '<tr style="background:#22c75a;color:#fff;font-weight:bold" data-assess="score-group'.$x.'" >
                                           <td> ' . $x.'. '. $record->competency . '</td>
                                           <td>Competency</td>    
                                           <td>Score</td>    
@@ -75,10 +56,10 @@
             </table>
             <p style="text-align:right"> <button class="btn btn-primary" id="next">Next</button></p>            
         </div>
-        <div class="col-sm-12"  id="shopSummary">
+        <div class="col-sm-12"  id="shopSummary" style="display:none">
             <table class="table table-bordered table-striped"> 
                 <thead>
-                    <tr style="background:#DAA520;color:#fff">
+                    <tr style="background:#22c75a;color:#fff">
                         <th>S/N</th>
                         <th>Competency</th>
                         <th>Min Required Standard Score</th>
@@ -96,8 +77,8 @@
                         $tBodyStr .= '<tr data-assess="comment-group'.$x.'">
                                           <td>'.$x.'</td>
                                           <td style="text-align:left">' . $record->competency . '</td>
-                                          <td>'.$record->min_requirement.'</td>    
-                                          <td class="group'.$x.'"></td>    
+                                          <td data-minreq="'.$x.'">'.$record->min_requirement.'</td>    
+                                          <td class="group'.$x.'" data-actual="'.$x.'"></td>    
                                           <td style="text-align:left" contenteditable="true" data-comment="group'.$x.'"></td>                                                                                                                     
                                     </tr>';   
                         $total +=  (int) $record->min_requirement;                                                          
@@ -161,7 +142,7 @@ function markCompetency(e)
    
    $('td[data-checked="'+rowGroup+'"]').html('');
    row.find('td[data-checked="'+rowGroup+'"]').html('<span class="glyphicon glyphicon-ok"></span>'); 
-   $('[data-assess="score-'+rowGroup+'"]').css({'background':'#DAA520'})
+   $('[data-assess="score-'+rowGroup+'"]').css({'background':'#22c75a'})
    var groupNumber = rowGroup.replace("group","");
    assessSummary[groupNumber] = {'score':score};  
    calculateTotal();
@@ -244,15 +225,23 @@ function submitAssessment(e){
 function validate(data){
     var message = "Please evaluate the following item number(s): ";
     var validated = true;
+    var minReqScore, actualScore;
     for(var x=1; x<=totalAssesssment; x++){                   
         if(data == 'score'){
-            $('[data-assess="'+data+'-group'+x+'"]').css({'background':'#DAA520'});           
+            $('[data-assess="'+data+'-group'+x+'"]').css({'background':'#22c75a'});           
         }
         if(assessSummary[x] == undefined || assessSummary[x][data] == undefined){
             message += x + ' ';     
             $('[data-assess="'+data+'-group'+x+'"]').css({'background':'#F08080'});
             validated = false;
-        }           
+        }    
+        // if(data == 'comment'){
+        //     minReqScore = parseInt(('[data-minreq="'+x+'"]').html());
+        //     actualScore = parseInt(('[data-minreq="'+x+'"]').html());
+        //     if(actualScore >= minReqScore){
+        //         continue;
+        //     }
+        // }       
     } 
     $('.alert-danger').slideUp('fast');
     $('#message').html('');
@@ -280,4 +269,4 @@ function scrollToTop(currentY){
     setTimeout(scrollToTop(currentY), 100)  
 }
 </script>
-<?php require_once('partial/footer.php'); ?>
+<?php require_once('Partials/footer.php'); ?>

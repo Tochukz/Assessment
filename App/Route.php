@@ -43,7 +43,8 @@ class Route
         if($found === 'partial'){
             exit("Method not allowed<br />");
         }elseif($found === false){
-            return view('Errors.404');
+            $page = $url;
+            return view('Errors.404', ['page'=>$page]);
         }
     
     }

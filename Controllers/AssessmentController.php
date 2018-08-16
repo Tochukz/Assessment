@@ -15,21 +15,6 @@ class AssessmentController
 
     public function process()
     {
-        echo '<pre>';
-        var_dump($_POST);
-        echo '</pre>';
-    }
-
-    public function person($per){
-        echo $per;
-    }
-
-    public function personId($person ,$id){
-        echo $person, ' ', $id;
-    }
-
-    public function why()
-    {
-        echo 'Overiddes some';
+        return view('process');
     }
 }

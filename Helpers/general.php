@@ -8,8 +8,7 @@
  * @param array $array
  * @return void
  */
-function view($templateChain, $array = null){
-    App::view();
+function view($templateChain, $array = null){  
     if($array != null){
         foreach($array as $key=>$value){          
             $$key = $value;
