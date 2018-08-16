@@ -193,7 +193,7 @@ function recordComment(e){
     var comment = cell.html();
     var rowGroup = cell.attr('data-comment');   
     var groupNumber = rowGroup.replace("group",""); 
-    if(cell.html() && assessSummary[groupNumber] != undefined){       
+    if( comment.replace("&nbsp;", "") && assessSummary[groupNumber] != undefined){                 
         assessSummary[groupNumber].comment = comment;
         $('[data-assess="comment-'+rowGroup+'"]').css({'background':'#fff'}); 
     }
@@ -230,18 +230,19 @@ function validate(data){
         if(data == 'score'){
             $('[data-assess="'+data+'-group'+x+'"]').css({'background':'#22c75a'});           
         }
+        if(data == 'comment'){
+            minReqScore = parseInt($('[data-minreq="'+x+'"]').html());
+            actualScore = parseInt($('[data-actual="'+x+'"]').html());
+            if(actualScore >= minReqScore){
+                continue;
+            }
+        }      
         if(assessSummary[x] == undefined || assessSummary[x][data] == undefined){
             message += x + ' ';     
             $('[data-assess="'+data+'-group'+x+'"]').css({'background':'#F08080'});
             validated = false;
         }    
-        // if(data == 'comment'){
-        //     minReqScore = parseInt(('[data-minreq="'+x+'"]').html());
-        //     actualScore = parseInt(('[data-minreq="'+x+'"]').html());
-        //     if(actualScore >= minReqScore){
-        //         continue;
-        //     }
-        // }       
+         
     } 
     $('.alert-danger').slideUp('fast');
     $('#message').html('');

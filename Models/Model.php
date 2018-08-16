@@ -78,6 +78,22 @@ abstract class Model
        return $results;
     }
 
+
+    public function getWhere($key, $value)
+    {
+        $this->setTableName();
+        $table = $this->table;
+        $query = "SELECT * FROM $table WHERE `$key` = :inputVal";
+        $statement = $this->connection->prepare($query);
+        $statement->execute(['inputVal'=>$value]);
+        $resultArray =  $statement->fetchAll(PDO::FETCH_ASSOC);
+        $results = array_map(function($record){
+            return (object) $record;
+        }, $resultArray);
+ 
+        return $results;
+    }
+
     public function update()
     {
 

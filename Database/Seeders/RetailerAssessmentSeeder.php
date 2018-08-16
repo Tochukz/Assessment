@@ -3,13 +3,15 @@ namespace Database\Seeders;
 
 use PDO;
 
-class ShopAssessmentSeeder extends Seeder
+class RetailerAssessmentSeeder extends Seeder
 {
-    public function seedShopAssessmentsTable()
+    public function seedRetailerAssessmentsTable()
     {    
-       $fileDir = appDir()."Storage/retailer-competency-assessment.csv";       
+       //$fileDir = appDir()."Storage/shop-retailer-assessment.csv"; 
+       $fileDir = appDir()."Storage/forecourt-retailer-assessment.csv";       
        $fileHandle = fopen($fileDir, 'r');    
-       $keys = ['3'=>'awareness', '4'=>'knowledge', '5'=>'skill', '6'=>'mastery', '7'=>'develop new'];     
+       $keys = ['3'=>'awareness', '4'=>'knowledge', '5'=>'skill', '6'=>'mastery', '7'=>'develop new'];  
+       $x = 0;   
        while(!feof($fileHandle)){
            $line = fgets($fileHandle);     
            if(!$line){
@@ -28,11 +30,12 @@ class ShopAssessmentSeeder extends Seeder
                    $assessment[] = [$keys[$i], $array[$i]];
                } 
            }
+           $record['question_no'] = ++$x;
            $record['assessment'] = json_encode($assessment);
-           $record['created_date'] = date("Y-m-d H:i:s");
-           //var_dump($record); 
-           //echo "\n";        
-           $this->seedTable('shop_assessments', $record);
+           //$record['place'] = 'shop';
+           $record['place'] = 'forecourt';
+           $record['created_date'] = date("Y-m-d H:i:s");                  
+           $this->seedTable('retailer_assessments', $record);
 
        }
        fclose($fileHandle);

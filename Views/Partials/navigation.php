@@ -28,6 +28,9 @@
         background:grey;
         cursor:pointer;
     }
+    .btn.btn-primary{
+        background:#22c75a;
+    }
     </style>
 </head>
 <body>
@@ -44,7 +47,7 @@
         </div>
         <div class="collapse navbar-collapse navbar-right" id="nav-menu">
             <ul class="nav navbar-nav">
-                <li><a href="#">Create New</a></li>
+                <li><a href="#"><?= $place?? ' ' ?></a></li>
                 
             </ul>
         </div>

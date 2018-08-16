@@ -1,16 +1,23 @@
 <?php
 namespace Controllers;
 
-use Models\ShopAssessment;
+use Models\RetailerAssessment;
 use Models\ShopRetailers;
 
 class AssessmentController
 {
-    public function index()    
+    public function shop()    
     {        
-        $assessment = new ShopAssessment();
-        $data = $assessment->get();      
-        return View('index', ['data'=>$data]);
+        $assessment = new RetailerAssessment();
+        $data = $assessment->getWhere('place', 'shop');            
+        return view('index', ['data'=>$data, 'place'=>'Shop']);
+    }
+
+    public function forecourt()    
+    {        
+        $assessment = new RetailerAssessment();
+        $data = $assessment->getWhere('place', 'forecourt');            
+        return view('index', ['data'=>$data, 'place'=>'Forecourt']);
     }
 
     public function process()
