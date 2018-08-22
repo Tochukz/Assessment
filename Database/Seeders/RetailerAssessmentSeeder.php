@@ -7,8 +7,8 @@ class RetailerAssessmentSeeder extends Seeder
 {
     public function seedRetailerAssessmentsTable()
     {    
-       //$fileDir = appDir()."Storage/shop-retailer-assessment.csv"; 
-       $fileDir = appDir()."Storage/forecourt-retailer-assessment.csv";       
+       $fileDir = appDir()."Storage/shop-retailer-assessment.csv"; 
+       //$fileDir = appDir()."Storage/forecourt-retailer-assessment.csv";       
        $fileHandle = fopen($fileDir, 'r');    
        $keys = ['3'=>'awareness', '4'=>'knowledge', '5'=>'skill', '6'=>'mastery', '7'=>'develop new'];  
        $x = 0;   
@@ -32,8 +32,8 @@ class RetailerAssessmentSeeder extends Seeder
            }
            $record['question_no'] = ++$x;
            $record['assessment'] = json_encode($assessment);
-           //$record['place'] = 'shop';
-           $record['place'] = 'forecourt';
+           $record['shop_or_forecourt'] = 'shop';
+           //$record['shop_or_forecourt'] = 'forecourt';
            $record['created_date'] = date("Y-m-d H:i:s");                  
            $this->seedTable('retailer_assessments', $record);
 

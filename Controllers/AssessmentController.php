@@ -9,7 +9,7 @@ class AssessmentController
     public function shop()    
     {        
         $assessment = new RetailerAssessment();
-        $data = $assessment->getWhere('place', 'shop');            
+        $data = $assessment->getWhere('shop_or_forecourt', 'shop');            
         return view('index', ['data'=>$data, 'place'=>'Shop']);
     }
 
@@ -22,6 +22,9 @@ class AssessmentController
 
     public function process()
     {
+        echo '<pre>';
+        var_dump(json_decode($_POST['result']));
+        echo '</pre>';
         return view('process');
     }
 }

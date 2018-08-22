@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Returns a specified template for display.
+ * Requires a specified template for display.
  * The elements of the array passed to the template becomes individual variables accessable in the template.
  * 
  * @param string $templateChain
