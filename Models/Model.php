@@ -53,8 +53,8 @@ abstract class Model
        $query = "SELECT * FROM $table WHERE id = :id LIMIT 1";
        $statement = $this->connection->prepare($query);
        $statement->execute(['id'=>$id]);
-       $resultArray =  $statement->fetchAll(PDO::FETCH_ASSOC);
-       $result = (object) $resultArray[0];
+       $resultArray =  $statement->fetchAll(PDO::FETCH_ASSOC);      
+       $result = ($resultArray)? (object) $resultArray[0] : null;  
        return $result;
     }
 
@@ -63,11 +63,16 @@ abstract class Model
      * 
      * @return array
      */
-    public function get()
+    public function get(int $x = 0)
     {
        $this->setTableName();
        $table = $this->table;
-       $query = "SELECT * FROM $table";   
+       if($x == 0){
+           $query = "SELECT * FROM $table"; 
+       }else{
+           $query = "SELECT * FROM $table LIMIT $x"; 
+       }
+         
        $statement = $this->connection->prepare($query);
        $statement->execute();
        $resultArray =  $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -79,7 +84,16 @@ abstract class Model
     }
 
 
-    public function getWhere($key, $value)
+    /**
+     * Retuns a number of  record from a database table specified by the $table property.
+     * 
+     * @return \stdClass
+     */
+    public function take(int $x){
+        return $this->get($x);    
+    }
+    
+    public function getWhere(string $key, string $value)
     {
         $this->setTableName();
         $table = $this->table;
